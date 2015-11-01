@@ -86,14 +86,14 @@ int startGame(int counter, int zufallszahl){
 	char replay[256];
 	fgets(replay,sizeof(replay),stdin);
 	int yn = strtod(replay,NULL);
-	if (yn==1) return startGame(0,rand()%9+1);
+	if (yn==1) return startGame(0,rand()%99+1);
 	return counter;
 }
 
 
 int main (int argc, char *argv[]){
 	srand(time(NULL));
-	int zufallszahl = rand()%9 +1;
+	int zufallszahl = rand()%99+1;
 	int counter = 1;
 	startGame(counter, zufallszahl);
 	return 0;
