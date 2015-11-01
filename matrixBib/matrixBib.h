@@ -144,6 +144,9 @@ Rueckgabe: "a * b"
 - Ergebnis der Multiplikation in neu erzeugter Matrix
 - Matrix der Groesse "0" im Fehlerfall
 */
+
+// probably broken
+
 matrix multMatrix(matrix a, matrix b){
 	if (a.breite != b.hoehe){
 		return initMatrix(0,0);
