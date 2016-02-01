@@ -13,9 +13,9 @@ void printPI(){
 
 int main (int argc, char *argv[]){
 	pid_t pid;
-	int fd[2],n=sizeof(long long unsigned);
+	int fd[2],n=256*sizeof(char);
 //	char *string = malloc(n*sizeof(char));
-	unsigned long long string=0;
+	char  string[256];
 //	int string=malloc(sizeof(unsigned long long));
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -37,18 +37,15 @@ int main (int argc, char *argv[]){
 		///PARENT PROCESS/////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////
 		printf("This is the parent process and I'm writing stuff into the pipe\nThis is mit pid: <%d>\n",pid);
-		string = 112312412412412323;
-//		string = "dickbutt.";
+		char tmp[]="penis";
 //		printPI();
 		close(fd[0]); // stop reading
-		if ((write(fd[1],&string,n)) !=n){
-//		if ((write(fd[1],string,n)) !=n){
+		if ((write(fd[1],&tmp,n)) !=n){
 			perror("Fehler beim Schreiben in die Pipe.\n");
 			exit(EXIT_FAILURE);
 		}
 		else{
-			printf("I just wrote <%llu> into the pipe.\nNow I'm gonna try to wait for my child (pid: <%d>) to terminate.\n\n",string,pid);
-//			printf("I just wrote <%s> into the pipe.\nNow I'm gonna try to wait for my child (pid: <%llu>) to terminate.\n\n",string,pid);
+			printf("I just wrote <%s> into the pipe.\nNow I'm gonna try to wait for my child (pid: <%d>) to terminate.\n\n",tmp,pid);
 		}
 		if (waitpid(pid,NULL,0) != pid){
 			perror("Fehler beim warten auf das Kindprozess.\n");
@@ -67,9 +64,7 @@ int main (int argc, char *argv[]){
 //		printPI();
 		close(fd[1]); // stop writing
 		n = read (fd[0],&string,PIPE_BUF); // read pipe
-//		n = read (fd[0],string,PIPE_BUF); // read pipe
-		printf("I just received <%llu> through the pipe.\n",string);
-//		printf("I just received <%s> through the pipe.\n",string);
+		printf("I just received <%s> through the pipe.\n",string);
 		printf("\n");
 	}
 	return EXIT_SUCCESS;

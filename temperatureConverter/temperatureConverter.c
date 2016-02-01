@@ -2,24 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char *argv[]){
-	if (argc < 4) {
-		fprintf(stderr,"usage: %s: <value> <unit> <target unit>\n", argv[0]);
-		return 1;
-		}
-	for (int i=0;i<argc;i++){
-		printf("parameter no. %d:\t%s\n", i,argv[i]);
-	}
-
-//	if (argv[1][0]>0 && argv[1][0]<=9) printf("\n%c > 0\n\n", argv[1][0]);
-	if (validateValue(argv[1])!=0) return 1;
-
-	convert(argv[1], argv[2],argv[3]);
-
-	return 0;
-	}
-void convert(char *penis, char *from, char *to){
-	double val= strtod(penis,NULL);
+void convert(char *value, char *from, char *to){
+	double val= strtod(value,NULL);
 	double result=0;
 	printf("trying to convert %f %s to %s\n", val,from, to);
 	if     (strcmp(from,"C")==0 && strcmp(to,"De")==0)  result=(100-val)*1.5;
@@ -81,3 +65,20 @@ int validateValue(char input[]){
 //	printf("input is valid and is a float (y=1,n=0): %d\n", isFloat);
 	return 0;
 }
+
+int main(int argc, char *argv[]){
+	if (argc < 4) {
+		fprintf(stderr,"usage: %s: <value> <unit> <target unit>\n", argv[0]);
+		return 1;
+		}
+	for (int i=0;i<argc;i++){
+		printf("parameter no. %d:\t%s\n", i,argv[i]);
+	}
+
+//	if (argv[1][0]>0 && argv[1][0]<=9) printf("\n%c > 0\n\n", argv[1][0]);
+	if (validateValue(argv[1])!=0) return 1;
+
+	convert(argv[1], argv[2],argv[3]);
+
+	return 0;
+	}

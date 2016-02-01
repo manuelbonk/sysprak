@@ -13,10 +13,17 @@ void printPI(){
 
 int main (int argc, char *argv[]){
 
-	srand(time(NULL));
-	unsigned long long p = rand();
+
+	unsigned long long value;
+	if  (argc>1){
+		value = strtoull(argv[1],NULL,10);
+	}
+	else {
+		srand(time(NULL));
+		value = rand();
+	}
 	unsigned long long lowerBorder = 2;
-	unsigned long long upperBorder = sqrtl(p);
+	unsigned long long upperBorder = sqrtl(value);
 	unsigned long long result=0;
 	printf("upper border: <%llu>\n",upperBorder);
 
@@ -42,9 +49,9 @@ int main (int argc, char *argv[]){
 	//////////////////////////////////////////////////////////////////////////////////
 	else if (pid == 0){
 		printf("\nThis is the child process.\n");
-		for(unsigned long long i=lowerBorder;i<upperBorder;i+=2){
-			if (p % i == 0){
-				printf("<%llu> ist ein Teiler von <%llu>!\n",i,p);
+		for(long long unsigned i=lowerBorder;i<upperBorder;i+=2){
+			if (value % i == 0){
+				printf("<%llu> ist ein Teiler von <%llu>!\n",i,value);
 				result = i;
 			i=upperBorder;
 			}
@@ -76,15 +83,17 @@ int main (int argc, char *argv[]){
 		printf("I've just received <%llu> through the pipe.\n",result);
 
 		for(unsigned long long i=lowerBorder+1;i<upperBorder;i+=2){
-			if (p % i == 0){
+			if (value % i == 0){
+				printf("<%llu> ist ein Teiler von <%llu>!\n",i,value);
 				result = i;
+				i = upperBorder;
 			}
 		}
 		if (result != 0){
-			printf("<%llu> is not prime!\n",p);
+			printf("<%llu> is not prime!\n",value);
 		}
 		else {
-			printf("<%llu> is prime!\n",p);
+			printf("<%llu> is prime!\n",value);
 		}
 	close(fd[0]);
 	}
