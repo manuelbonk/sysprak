@@ -1,4 +1,4 @@
-CFLAGS = -g -Wall -lm -pthread
+CFLAGS = -g -Wall -lm -pthread -std=c99 -lm
 CC = gcc
 
 default: checkPrimeMultiThreaded

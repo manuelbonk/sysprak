@@ -21,8 +21,12 @@ struct timespec tim,tim2;
 	// LOOK FOR FACTORS ////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
 void *checkPrime(void *penis){
-	threadParams *tp = penis;
-	for(long long unsigned i=2+tp->tid;i<sqrtl(tp->value);i+=NUM_THREADS){
+	threadParams *tp = (threadParams*) penis;
+	long long unsigned pimmel = sqrt(tp->value);
+	printf("FfASDFASDFASDFSDGASDFASDFASDFSADF PIMMEL <%llu>\n\n\n",pimmel);
+	for(long long unsigned i=2+tp->tid;i<sqrt(123);i+=NUM_THREADS){
+//	for(long long unsigned i=2+tp->tid;i<sqrtl(pimmel);i+=NUM_THREADS){
+//	for(long long unsigned i=2+tp->tid;i<sqrtl(tp->value);i+=NUM_THREADS){
 //		printf("<%llu>: val: <%d>\n",tp->tid,i);
 		if(factor>1){
 			printf("yay, es wurde ein teiler von einem anderen thread gefunden!\n");
@@ -53,6 +57,7 @@ int main (int argc, char *argv[]){
 		srand(time(NULL));
 		value = rand();
 		}
+	printf("VALUE: <%llu>\n\n",value);
 
 	threadParams tp[NUM_THREADS];
 	// initialize and set thread detached attribute

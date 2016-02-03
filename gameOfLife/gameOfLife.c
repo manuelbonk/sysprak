@@ -3,6 +3,8 @@
 #include <time.h>
 #include <unistd.h>
 
+struct timespec tim, tim2;
+
 void printBoard(int** board,int size){
 	for (int y=0;y<size;y++){
 		for (int x=0;x<size;x++){
@@ -71,15 +73,17 @@ int** update(int** board, int size){
 	if (unchanged == size*size) return nextBoard;
 	printBoard(nextBoard,size);
 
-/*
-	struct timespec(), tim(), tim2();
-	tim.tv_sec=1;
-	tim.tv.nsec= 500000000L;
-	if (nanosleep(&tim,&tim2)<0){
-		printf("Nano  sleep system call failed.\n");
+
+//	tim.tv_sec=1;
+	tim.tv.nsec= 100000000;
+	nanosleep(&tim,&tim2);
+	/*
+	if(nanosleep(&tim,&tim2)<0){
+		printf("nanosleep system call failed.\n");
 		return -1;
 		}
-*/
+	*/
+
 	sleep(1);
 
 	return update(nextBoard,size);
@@ -98,8 +102,7 @@ int main (int argc,char *argv[]){
 
 		case 3:
 			density=strtod(argv[1],NULL);
-			size = strtol(argv[2],NULL,10);
-			break;
+			size = strtol(argv[2],NULL,10); break;
 
 		default:
 			printf("usage: %s [density] <size>\n",*argv);
