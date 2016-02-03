@@ -22,12 +22,10 @@ struct timespec tim,tim2;
 	////////////////////////////////////////////////////////////////////////
 void *checkPrime(void *penis){
 	threadParams *tp = (threadParams*) penis;
-	long long unsigned pimmel = sqrt(tp->value);
-	printf("FfASDFASDFASDFSDGASDFASDFASDFSADF PIMMEL <%llu>\n\n\n",pimmel);
-	for(long long unsigned i=2+tp->tid;i<sqrt(123);i+=NUM_THREADS){
-//	for(long long unsigned i=2+tp->tid;i<sqrtl(pimmel);i+=NUM_THREADS){
+//	this works on buzz, but not on cip machines ¯\_(ツ)_/¯
 //	for(long long unsigned i=2+tp->tid;i<sqrtl(tp->value);i+=NUM_THREADS){
-//		printf("<%llu>: val: <%d>\n",tp->tid,i);
+	for(long long unsigned i=2+tp->tid;i<(tp->value)/2;i+=NUM_THREADS){
+		printf("<%ld>: val: <%llu>\n",tp->tid,i);
 		if(factor>1){
 			printf("yay, es wurde ein teiler von einem anderen thread gefunden!\n");
 			pthread_exit(NULL);

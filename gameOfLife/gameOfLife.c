@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 600
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -73,9 +74,9 @@ int** update(int** board, int size){
 	if (unchanged == size*size) return nextBoard;
 	printBoard(nextBoard,size);
 
-
-//	tim.tv_sec=1;
-	tim.tv.nsec= 100000000;
+	tim.tv_nsec= 15000000;
+	//.1 s
+	// tim.tv_nsec= 100000000;
 	nanosleep(&tim,&tim2);
 	/*
 	if(nanosleep(&tim,&tim2)<0){
@@ -83,9 +84,7 @@ int** update(int** board, int size){
 		return -1;
 		}
 	*/
-
-	sleep(1);
-
+//	printf("finished waiting \\o/\n");
 	return update(nextBoard,size);
 }
 
