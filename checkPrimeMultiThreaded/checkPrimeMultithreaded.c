@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <math.h>
+
 #define NUM_THREADS		4
 
 
@@ -10,19 +11,30 @@ typedef struct{
 	long long unsigned value;
 }threadParams;
 
+long long unsigned factor=1;
+pthread_mutex_t mutexfactor;
 
+	////////////////////////////////////////////////////////////////////////
+	// LOOK FOR FACTORS ////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
 void *checkPrime(void *penis){
-	printf("pthread_self(): <%lu>\n",pthread_self());
 	threadParams *tp = penis;
 	for(long long unsigned i=2+tp->tid;i<sqrtl(tp->value);i+=NUM_THREADS){
 //		printf("<%llu>: val: <%d>\n",tp->tid,i);
+		if(factor>1){
+			pthread_exit(NULL);
+		}
 		if(tp->value % i == 0){
 			printf("<%ld>: <%llu> ist ein Teiler von <%llu>!\n",tp->tid,i,tp->value);
-			return 0;
+			pthread_mutex_lock(&mutexfactor);
+			factor = i;
+			pthread_mutex_unlock(&mutexfactor);
+			pthread_exit((void*)i);
 		}
 	}
 	pthread_exit(NULL);
 }
+
 
 int main (int argc, char *argv[]){
 	// check parameters
@@ -39,13 +51,17 @@ int main (int argc, char *argv[]){
 	// initialize and set thread detached attribute
 	pthread_t threads[NUM_THREADS];
 	pthread_attr_t attr;
+	pthread_attr_init(&attr);
+	pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
 	//return code of thread creation
 	int rc;
 	long t;
+	void *status;
 
-	pthread_attr_init(&attr);
-	pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
 
+	////////////////////////////////////////////////////////////////////////
+	// CREATE THREADS //////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
 	for (t=0;t<NUM_THREADS;t++){
 		tp[t].tid=t;
 		tp[t].value=value;
@@ -56,13 +72,22 @@ int main (int argc, char *argv[]){
 			exit(-1);
 		}
 	}
-/*
-	while(argc>0){
-		printf("the parent process is still alive!\n");
-		sleep(1);
-	}
-*/
+	pthread_attr_destroy(&attr);
 
+	////////////////////////////////////////////////////////////////////////
+	// WAIT FOR THE THREADS TO END /////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	for (t=0;t<NUM_THREADS;t++) {
+		rc = pthread_join(threads[t],&status);
+		if (rc) {
+			printf("ERROR: return code from pthread_join(): <%d>\n",rc);
+			exit(-1);
+		}
+		printf("return from thread[%ld]: <%llu>\n",t,(long long unsigned)status);
+	}
+	if (factor == 1){
+		printf("<%llu> is prime!\n",value);
+	}
 	pthread_exit(NULL);
 	return 0;
 }

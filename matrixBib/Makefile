@@ -1,5 +1,11 @@
 CFLAGS = -g -lm -Wall
 CC = gcc
 
-complex: main.c
-	$(CC) $(CFLAGS) -o main main.c -I./
+default: matrixBib
+
+
+matrixBib: matrixBib.c
+	$(CC) $(CFLAGS) -o matrixBib matrixBib.c -I./
+
+clean:
+	rm matrixBib
