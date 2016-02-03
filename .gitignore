@@ -9,4 +9,4 @@
 ./.git
 ./checkprime/checkPrime
 ./checkprime/playground/playground
-./checkPrimeMultiThreaded/checkPrimeMultithreaded
+./checkPrimeMultiThreaded/checkPrimeMultiThreaded

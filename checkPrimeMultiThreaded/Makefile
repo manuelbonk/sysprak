@@ -1,10 +1,10 @@
 CFLAGS = -g -Wall -lm -pthread
 CC = gcc
 
-default: checkPrimeMultithreaded
+default: checkPrimeMultiThreaded
 
-checkPrimeMultithreaded: checkPrimeMultithreaded.c
-	$(CC) $(CFLAGS) -o checkPrimeMultithreaded checkPrimeMultithreaded.c
+checkPrimeMultithreaded: checkPrimeMultiThreaded.c
+	$(CC) $(CFLAGS) -o checkPrimeMultiThreaded checkPrimeMultiThreaded.c
 
 clean:
-	rm -f checkPrimeMultithreaded
+	rm -f checkPrimeMultiThreaded
