@@ -6,7 +6,6 @@
 ./guessNumbers/guessNumbers
 ./gameOfLife/gameOfLife
 ./matrixBib/matrixBib
-./.git
 ./checkprime/checkPrime
 ./checkprime/playground/playground
 ./checkPrimeMultiThreaded/checkPrimeMultiThreaded
