@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <math.h>
+#include <time.h>
 
-#define NUM_THREADS		4
+#define NUM_THREADS		3
 
 
 typedef struct{
@@ -14,6 +15,8 @@ typedef struct{
 long long unsigned factor=1;
 pthread_mutex_t mutexfactor;
 
+struct timespec tim,tim2;
+
 	////////////////////////////////////////////////////////////////////////
 	// LOOK FOR FACTORS ////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
@@ -22,6 +25,7 @@ void *checkPrime(void *penis){
 	for(long long unsigned i=2+tp->tid;i<sqrtl(tp->value);i+=NUM_THREADS){
 //		printf("<%llu>: val: <%d>\n",tp->tid,i);
 		if(factor>1){
+			printf("yay, es wurde ein teiler von einem anderen thread gefunden!\n");
 			pthread_exit(NULL);
 		}
 		if(tp->value % i == 0){
@@ -31,6 +35,9 @@ void *checkPrime(void *penis){
 			pthread_mutex_unlock(&mutexfactor);
 			pthread_exit((void*)i);
 		}
+//	printf("<%lld>\n",i);
+// even if the thread sleeps for only 1 ns, the speed decrease is ridiculous
+//	nanosleep(&tim,&tim2);
 	}
 	pthread_exit(NULL);
 }
@@ -57,6 +64,7 @@ int main (int argc, char *argv[]){
 	int rc;
 	long t;
 	void *status;
+	tim.tv_nsec=1;
 
 
 	////////////////////////////////////////////////////////////////////////
