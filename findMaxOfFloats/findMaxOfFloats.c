@@ -9,8 +9,8 @@ int main (int argc, char *argv[]){
 	char filename[256];
 
 	if (argc<2){
-	printf("Which file should be read?\t(press ^d to quit input)\n");
-	fgets(filename,sizeof(filename),stdin);
+		printf("Which file should be read?\t(press ^d to quit input)\n");
+		fgets(filename,sizeof(filename),stdin);
 //	printf("\nYou've inserted: <%s>\n",filename);
 
 	}
